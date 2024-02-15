@@ -4,7 +4,7 @@ import type { NumberParser, Reviver } from './types'
 import { GenericObject } from './types'
 
 /**
- * The LosslessJSON.parse() method parses a string as JSON, optionally transforming
+ * The JSONB.parse() method parses a string as JSON, optionally transforming
  * the value produced by parsing.
  *
  * The parser is based on the parser of Tan Li Hou shared in

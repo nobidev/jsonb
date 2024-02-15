@@ -2,7 +2,7 @@ import type { GenericObject, NumberStringifier, Replacer } from './types'
 import { isNumber } from './utils.js'
 
 /**
- * The LosslessJSON.stringify() method converts a JavaScript value to a JSON string,
+ * The JSONB.stringify() method converts a JavaScript value to a JSON string,
  * optionally replacing values if a replacer function is specified, or
  * optionally including only the specified properties if a replacer array is specified.
  *

@@ -12,7 +12,7 @@ console.log(JSON.stringify(JSON.parse(text)))
 // '{"decimal":2.37,"long":9123372036854000000,"big":null}'
 // WHOOPS!!!
 
-// LosslessJSON.parse will preserve all numbers and even the formatting:
+// JSONB.parse will preserve all numbers and even the formatting:
 console.log(stringify(parse(text)))
 // '{"decimal":2.370,"long":9123372036854000123,"big":2.3e+500}'
 ```
@@ -213,7 +213,7 @@ console.log(parsed)
 
 ### parse(text [, reviver [, parseNumber]])
 
-The `LosslessJSON.parse()` function parses a string as JSON, optionally transforming the value produced by parsing.
+The `JSONB.parse()` function parses a string as JSON, optionally transforming the value produced by parsing.
 
 - **@param** `{string} text`
   The string to parse as JSON. See the JSON object for a description of JSON syntax.
@@ -227,7 +227,7 @@ The `LosslessJSON.parse()` function parses a string as JSON, optionally transfor
 
 ### stringify(value [, replacer [, space [, numberStringifiers]]])
 
-The `LosslessJSON.stringify()` function converts a JavaScript value to a JSON string, optionally replacing values if a replacer function is specified, or optionally including only the specified properties if a replacer array is specified.
+The `JSONB.stringify()` function converts a JavaScript value to a JSON string, optionally replacing values if a replacer function is specified, or optionally including only the specified properties if a replacer array is specified.
 
 - **@param** `{unknown} value`
   The value to convert to a JSON string.
