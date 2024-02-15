@@ -1,4 +1,4 @@
-import { LosslessNumber } from './LosslessNumber.js'
+import { LosslessNumber } from './lossless-number.js'
 import { isInteger } from './utils.js'
 
 export function parseLosslessNumber(value: string): LosslessNumber {

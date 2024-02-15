@@ -1,4 +1,4 @@
-import { parseLosslessNumber } from './numberParsers.js'
+import { parseLosslessNumber } from './number-parsers.js'
 import { revive } from './revive.js'
 import type { NumberParser, Reviver } from './types'
 import { GenericObject } from './types'
