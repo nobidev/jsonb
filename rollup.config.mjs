@@ -4,7 +4,7 @@ export default {
   input: './lib/esm/index.js',
   output: {
     name: 'LosslessJSON',
-    file: 'lib/umd/lossless-json.js',
+    file: 'lib/umd/jsonb.js',
     format: 'umd',
     compact: true,
     sourcemap: true,

@@ -1,28 +1,28 @@
 {
-  "name": "lossless-json",
-  "version": "4.0.1",
+  "name": "@nobidev/jsonb",
+  "version": "0.0.0",
   "description": "Parse JSON without risk of losing numeric information",
-  "main": "lib/umd/lossless-json.js",
+  "main": "lib/umd/jsonb.js",
   "module": "lib/esm/index.js",
-  "browser": "lib/umd/lossless-json.js",
+  "browser": "lib/umd/jsonb.js",
   "types": "lib/types/index.d.ts",
   "sideEffects": false,
   "exports": {
     ".": {
       "import": "./lib/esm/index.js",
-      "require": "./lib/umd/lossless-json.js",
+      "require": "./lib/umd/jsonb.js",
       "types": "./lib/types/index.d.ts"
     }
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/josdejong/lossless-json.git"
+    "url": "https://github.com/nobidev/jsonb.git"
   },
   "scripts": {
     "test": "vitest watch src",
     "test-ci": "vitest run src",
     "lint": "prettier --check . && eslint src/**/*.ts test-lib/**/*.mjs tools/**/*.mjs",
-    "format": "prettier --write . && npm run lint -- --fix",
+    "format": "prettier --write . && yarn lint -- --fix",
     "build": "npm-run-all build:**",
     "build:clean": "del-cli lib",
     "build:esm": "babel src --out-dir lib/esm --extensions \".ts\" --source-maps --config-file ./babel.config.json",
@@ -31,15 +31,14 @@
     "build:umd:cpy": "cpy tools/cjs/package.json lib/umd --flat",
     "build:types": "tsc --project tsconfig-types.json",
     "build:validate": "vitest run test-lib",
-    "build-and-test": "npm run test-ci && npm run lint && npm run build",
+    "build-and-test": "yarn test-ci && yarn lint && yarn build",
     "release": "npm-run-all release:**",
-    "release:build-and-test": "npm run build-and-test",
-    "release:version": "standard-version",
+    "release:build-and-test": "yarn build-and-test",
+    "release:version": "standard-version --sign",
     "release:push": "git push && git push --tag",
-    "release:publish": "npm publish",
-    "release-dry-run": "npm run build-and-test && standard-version --dry-run",
-    "benchmark": "npm run build:esm && node tools/benchmark/run.mjs",
-    "prepare": "husky install"
+    "release:publish": "yarn publish --non-interactive --access=public",
+    "release-dry-run": "yarn build-and-test && standard-version --sign --dry-run",
+    "benchmark": "yarn build:esm && node tools/benchmark/run.mjs"
   },
   "keywords": [
     "json",
@@ -78,7 +77,6 @@
     "eslint-plugin-n": "16.6.2",
     "eslint-plugin-node": "11.1.0",
     "eslint-plugin-promise": "6.1.1",
-    "husky": "8.0.3",
     "npm-run-all": "4.1.5",
     "prettier": "3.2.4",
     "rollup": "4.9.6",
@@ -87,7 +85,6 @@
     "vitest": "1.2.1"
   },
   "files": [
-    "dist",
     "lib",
     "HISTORY.md",
     "LICENSE.md",

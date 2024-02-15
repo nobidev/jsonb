@@ -1,9 +1,9 @@
-# lossless-json
+# jsonb
 
 Parse JSON without risk of losing numeric information.
 
 ```js
-import { parse, stringify } from 'lossless-json'
+import { parse, stringify } from '@nobidev/jsonb'
 
 const text = '{"decimal":2.370,"long":9123372036854000123,"big":2.3e+500}'
 
@@ -19,9 +19,9 @@ console.log(stringify(parse(text)))
 
 The following in-depth article explains what happens there: [Why does JSON.parse corrupt large numbers and how to solve this?](https://jsoneditoronline.org/indepth/parse/why-does-json-parse-corrupt-large-numbers/)
 
-**How does it work?** The library works exactly the same as the native `JSON.parse` and `JSON.stringify`. The difference is that `lossless-json` preserves information of big numbers. `lossless-json` parses numeric values not as a regular number but as a `LosslessNumber`, a lightweight class which stores the numeric value as a string. One can perform regular operations with a `LosslessNumber`, and it will throw an error when this would result in losing information.
+**How does it work?** The library works exactly the same as the native `JSON.parse` and `JSON.stringify`. The difference is that `jsonb` preserves information of big numbers. `jsonb` parses numeric values not as a regular number but as a `LosslessNumber`, a lightweight class which stores the numeric value as a string. One can perform regular operations with a `LosslessNumber`, and it will throw an error when this would result in losing information.
 
-**When to use?** If you have to deal with JSON data that contains `long` values for example, coming from an application like C++, Java, or C#. The trade-off is that `lossless-json` is slower than the native `JSON.parse` and `JSON.stringify` functions, so be careful when performance is a bottleneck for you.
+**When to use?** If you have to deal with JSON data that contains `long` values for example, coming from an application like C++, Java, or C#. The trade-off is that `jsonb` is slower than the native `JSON.parse` and `JSON.stringify` functions, so be careful when performance is a bottleneck for you.
 
 Features:
 
@@ -40,10 +40,10 @@ Features:
 
 ## Install
 
-Install via [npm](https://www.npmjs.com/package/lossless-json):
+Install via [npm](https://www.npmjs.com/package/@nobidev/jsonb):
 
 ```
-npm install lossless-json
+yarn add @nobidev/jsonb
 ```
 
 ## Use
@@ -53,7 +53,7 @@ npm install lossless-json
 Parsing and stringification works as you're used to:
 
 ```js
-import { parse, stringify } from 'lossless-json'
+import { parse, stringify } from '@nobidev/jsonb'
 
 const json = parse('{"foo":"bar"}') // {foo: 'bar'}
 const text = stringify(json) // '{"foo":"bar"}'
@@ -64,7 +64,7 @@ const text = stringify(json) // '{"foo":"bar"}'
 Numbers are parsed into a `LosslessNumber`, which can be used like a regular number in numeric operations. Converting to a number will throw an error when this would result in losing information due to truncation, overflow, or underflow.
 
 ```js
-import { parse } from 'lossless-json'
+import { parse } from '@nobidev/jsonb'
 
 const text = '{"normal":2.3,"long":123456789012345678901,"big":2.3e+500}'
 const json = parse(text)
@@ -86,7 +86,7 @@ console.log(json.long + 1)
 JavaScript natively supports `bigint`: big integers that can hold a large number of digits, instead of the about 15 digits that a regular `number` can hold. It is a typical use case to want to parse integer numbers into a `bigint`, and all other values into a regular `number`. This can be achieved with a custom `numberParser`:
 
 ```js
-import { parse, isInteger } from 'lossless-json'
+import { parse, isInteger } from '@nobidev/jsonb'
 
 // parse integer values into a bigint, and use a regular number otherwise
 export function customNumberParser(value) {
@@ -110,7 +110,7 @@ You can adjust the logic to your liking, using utility functions like `isInteger
 If you want parse a json string into an object with regular numbers, but want to validate that no numeric information is lost, you write your own number parser and use `isSafeNumber` to validate the numbers:
 
 ```js
-import { parse, isSafeNumber } from 'lossless-json'
+import { parse, isSafeNumber } from '@nobidev/jsonb'
 
 function parseAndValidateNumber(value) {
   if (!isSafeNumber(value)) {
@@ -137,7 +137,7 @@ try {
 To use the library in conjunction with your favorite BigNumber library, for example [decimal.js](https://github.com/MikeMcl/decimal.js/). You have to define a custom number parser and stringifier:
 
 ```js
-import { parse, stringify } from 'lossless-json'
+import { parse, stringify } from '@nobidev/jsonb'
 import Decimal from 'decimal.js'
 
 const parseDecimal = (value) => new Decimal(value)
@@ -165,7 +165,7 @@ The library is compatible with the native `JSON.parse` and `JSON.stringify`, and
 The following example stringifies a `Date` as an object with a `$date` key instead of a string, so it is uniquely recognizable when parsing the structure:
 
 ```js
-import { parse, stringify } from 'lossless-json'
+import { parse, stringify } from '@nobidev/jsonb'
 
 // stringify a Date as a unique object with a key '$date', so it is recognizable
 function customDateReplacer(key, value) {
@@ -330,7 +330,7 @@ new LosslessNumber(value: number | string) : LosslessNumber
   Revive strings containing an ISO 8601 date string into a JavaScript `Date` object. This reviver is not turned on by default because there is a small risk of parsing a text field that _accidentally_ contains a date into a `Date`. Whether `reviveDate` is safe to use depends on the use case. Usage:
 
   ```js
-  import { parse, reviveDate } from 'lossless-json'
+  import { parse, reviveDate } from '@nobidev/jsonb'
 
   const data = parse('["2022-08-25T09:39:19.288Z"]', reviveDate)
   // output:
@@ -355,19 +355,19 @@ Similar libraries:
 To test the library, first install dependencies once:
 
 ```
-npm install
+yarn
 ```
 
 To run the unit tests:
 
 ```
-npm test
+yarn test
 ```
 
 To build the library and run the unit tests and integration tests:
 
 ```
-npm run build-and-test
+yarn build-and-test
 ```
 
 ## Lint
@@ -375,13 +375,13 @@ npm run build-and-test
 Run linting:
 
 ```
-npm run lint
+yarn lint
 ```
 
 Fix linting issues automatically:
 
 ```
-npm run format
+yarn format
 ```
 
 ## Benchmark
@@ -389,23 +389,23 @@ npm run format
 To run a benchmark to compare the performance with the native `JSON` parser:
 
 ```
-npm run benchmark
+yarn benchmark
 ```
 
-(Spoiler: `lossless-json` is much slower than native)
+(Spoiler: `jsonb` is much slower than native)
 
 ## Build
 
 To build a bundled and minified library (ES5), first install the dependencies once:
 
 ```
-npm install
+yarn
 ```
 
 Then bundle the code:
 
 ```
-npm run build
+yarn build
 ```
 
 This will generate an ES module output and an UMD bundle in the folder `./.lib` which can be executed in browsers and node.js and used in the browser.
@@ -415,7 +415,7 @@ This will generate an ES module output and an UMD bundle in the folder `./.lib` 
 To release a new version:
 
 ```
-$ npm run release
+$ yarn release
 ```
 
 This will:
@@ -430,7 +430,7 @@ This will:
 To try the build and see the change list without actually publishing:
 
 ```
-$ npm run release-dry-run
+$ yarn release-dry-run
 ```
 
 ## License
